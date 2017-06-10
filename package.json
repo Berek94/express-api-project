@@ -4,18 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon run.js",
+    "dev": "killall -9 node && cross-env NODE_ENV=development nodemon run.js",
     "prod": "npm run clean && cross-env NODE_ENV=production babel -d dist src",
     "clean": "rimraf dist"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "compression": "^1.6.2",
     "express": "^4.15.3",
+    "express-validation": "^1.0.2",
     "helmet": "^3.6.1",
-    "mongoose": "^4.10.4"
+    "joi": "^10.5.2",
+    "mongoose": "^4.10.4",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "validator": "^7.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
