@@ -1,6 +1,10 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import validator from 'validator';
-import {hashSync, compareSync} from 'bcrypt-nodejs';
+import { hashSync, compareSync } from 'bcrypt-nodejs';
+import jwt from 'jsonwebtoken';
+
+import constants from '../../config/constants';
+import Post from '../Post/model';
 
 const userSchema = new Schema({
 	email: {
@@ -29,9 +33,15 @@ const userSchema = new Schema({
 		trim: true,
 		minlength: [6, 'Password need to be longer'],
 	},
-});
+	favorites: {
+		posts:[{
+			type: Schema.Types.ObjectId,
+			ref: 'Post',
+		}],
+	},
+}, { timestamps: true });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
 	if (this.isModified('password')) {
 		this.password = this.hashPassword(this.password);
 	}
@@ -43,8 +53,40 @@ userSchema.methods = {
 	hashPassword(password) {
 		return hashSync(password);
 	},
+
 	authenticateUser(password) {
 		return compareSync(password, this.password);
+	},
+
+	createToken() {
+		return jwt.sign({ id: this._id }, constants.JWT_SECRET);
+	},
+
+	toAuthJSON() {
+		return {
+			id: this._id,
+			firstName: this.firstName,
+			token: `JWT ${this.createToken()}`,
+		};
+	},
+
+	toJSON() {
+		return {
+			id: this._id,
+			firstName: this.firstName,
+		};
+	},
+
+	async toggleFavorite(postId) {
+		if (this.favorites.posts.indexOf(postId) >= 0) {
+			this.favorites.posts.remove(postId);
+			await Post.decrementFavoriteCount(postId);
+		} else {
+			this.favorites.posts.push(postId);
+			await Post.incrementFavoriteCount(postId);
+		}
+
+		return this.save();
 	},
 };
 
