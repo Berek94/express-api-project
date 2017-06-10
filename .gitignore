@@ -1,3 +1,7 @@
 node_modules
+<<<<<<< HEAD
 dist
 package-lock.json
+=======
+dist
+>>>>>>> some commit
