@@ -1,0 +1,19 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Test</title>
+</head>
+<body>
+	<script>
+		const webSocket = new WebSocket('ws://localhost:8080?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5MzQxZDA3ZmVmNDI5NTZjNGQ2NTcwOCIsImlhdCI6MTQ5Nzc3Nzc1MH0.zH35NjxJ_QPjKCwUiZfXNo5NcZFkRr0u-6eN2HfMZ_8');
+		webSocket.onopen = () => {
+			webSocket.send('loooool')
+		}
+		webSocket.onclose = () => {
+			console.log('Соедение закрыто');
+		}
+	</script>
+</body>
+</html>

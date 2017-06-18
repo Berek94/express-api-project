@@ -16,12 +16,12 @@ app.get('/', (req, res) => {
 });
 
 apiRouter(app);
-sockets(app);
 
 app.listen(constants.PORT, (error) => {
 	if (error) {
 		throw error;
 	} else {
 		console.log(`Сервер запущен в режиме "${process.env.NODE_ENV}" на ${constants.PORT} порту`);
+		sockets(app);
 	}
 });

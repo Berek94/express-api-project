@@ -73,7 +73,9 @@ userSchema.methods = {
 	toJSON() {
 		return {
 			id: this._id,
+			email: this.email,
 			firstName: this.firstName,
+			lastName: this.lastName,
 		};
 	},
 
