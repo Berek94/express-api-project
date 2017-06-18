@@ -34,7 +34,7 @@ const userSchema = new Schema({
 		minlength: [6, 'Password need to be longer'],
 	},
 	favorites: {
-		posts:[{
+		posts: [{
 			type: Schema.Types.ObjectId,
 			ref: 'Post',
 		}],

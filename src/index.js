@@ -5,6 +5,7 @@ import constants from './config/constants';
 import './config/database';
 import middlewaresConfig from './config/middlewares';
 import apiRouter from './modules';
+import sockets from './sockets';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 });
 
 apiRouter(app);
+sockets(app);
 
 app.listen(constants.PORT, (error) => {
 	if (error) {
